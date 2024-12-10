@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Child from './child.jsx';
+import {useState} from 'react';
+import { MdDelete } from 'react-icons/md';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './style.css';
+
+function App(){
+    const [task,settask]=useState([]);
+    const [currentvalue,setcurrentvalue]=useState('');
+
+    function handleClick(){
+        if(currentvalue===''){
+         alert('No input Found');
+         return;
+        }else{
+            settask([...task,currentvalue]);
+            setcurrentvalue('');
+        }
+    }
+    
+    function DeleteTask(index){
+        const updatedTasks = task.filter((_, i) => i !== index); // Exclude the task at the clicked index
+    settask(updatedTasks);
+    }
+
+    function handleCurrentValue(e){
+        setcurrentvalue(e.target.value);
+    }
+    return(
+        <div className="container">
+            <Child 
+            handleClick={handleClick}
+            task={currentvalue}
+            handleCurrentValue={handleCurrentValue}
+            />
+        <div>
+            {task.map((currentvalue,index)=>(
+                <p key={index}>{currentvalue}<MdDelete onClick={() => DeleteTask(index)} className="iconstyle" /></p>
+            ))
+            
+            }
+        </div>
+        </div>
+        
+    );
+
 }
-
 export default App;
