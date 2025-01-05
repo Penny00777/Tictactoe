@@ -1,5 +1,5 @@
 import React from 'react';
-import Parent from './Parent.jsx';
+import Parent from './Components/Parent.jsx';
 import './style.css';
 
 
